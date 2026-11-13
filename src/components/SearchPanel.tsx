@@ -1,6 +1,7 @@
 import type { SearchFilters } from '../types';
 import { EDUCATION_STAGES } from '../types';
-import { citiesForProvince, graduationYears, uniqueProvinces } from '../lib/search';
+import { CHINA_PROVINCES } from '../data/chinaProvinces';
+import { citiesForProvince, graduationYears } from '../lib/search';
 import type { ClassArchive, School } from '../types';
 
 interface SearchPanelProps {
@@ -16,7 +17,7 @@ export function SearchPanel({
   schools,
   classes,
 }: SearchPanelProps) {
-  const provinces = uniqueProvinces(schools);
+  const provinces = CHINA_PROVINCES;
   const cities = citiesForProvince(schools, filters.province);
   const years = graduationYears(classes);
 
