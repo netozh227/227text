@@ -1,5 +1,6 @@
 import type { AppState, AuthSession } from '../types';
 import { seedData, STORAGE_VERSION } from '../data/seedData';
+import { ensureSimulatedUser } from '../lib/simulatedAuth';
 
 const DATA_KEY = 'gpa-app-state';
 const SESSION_KEY = 'gpa-auth-session';
@@ -37,14 +38,14 @@ function mergeWithSeed(parsed: Partial<AppState>): AppState {
 export function loadAppState(): AppState {
   try {
     const raw = localStorage.getItem(DATA_KEY);
-    if (!raw) return structuredClone(seedData);
+    if (!raw) return ensureSimulatedUser(structuredClone(seedData));
     const parsed = JSON.parse(raw) as AppState;
     if (parsed.version !== STORAGE_VERSION) {
-      return mergeWithSeed(parsed);
+      return ensureSimulatedUser(mergeWithSeed(parsed));
     }
-    return parsed;
+    return ensureSimulatedUser(parsed);
   } catch {
-    return structuredClone(seedData);
+    return ensureSimulatedUser(structuredClone(seedData));
   }
 }
 

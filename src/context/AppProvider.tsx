@@ -16,6 +16,11 @@ import type {
 } from '../types';
 import { hashPassword, verifyPassword } from '../lib/crypto';
 import {
+  ensureSimulatedUser,
+  getSimulatedSession,
+  resolveSession,
+} from '../lib/simulatedAuth';
+import {
   loadAppState,
   loadSession,
   saveAppState,
@@ -52,9 +57,18 @@ function findUserByUsername(state: AppState, username: string): UserAccount | un
   return state.users.find((u) => u.username.toLowerCase() === normalized);
 }
 
+function initApp(): { state: AppState; session: AuthSession } {
+  const state = ensureSimulatedUser(loadAppState());
+  const session = resolveSession(loadSession(), state);
+  saveAppState(state);
+  saveSession(session);
+  return { state, session };
+}
+
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<AppState>(() => loadAppState());
-  const [session, setSession] = useState<AuthSession | null>(() => loadSession());
+  const [initial] = useState(initApp);
+  const [state, setState] = useState<AppState>(() => initial.state);
+  const [session, setSession] = useState<AuthSession | null>(() => initial.session);
 
   const persistState = useCallback((next: AppState) => {
     setState(next);
@@ -118,8 +132,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   );
 
   const logout = useCallback(() => {
-    setSession(null);
-    saveSession(null);
+    const simulated = getSimulatedSession();
+    setSession(simulated);
+    saveSession(simulated);
   }, []);
 
   const updateUserClasses = useCallback(
