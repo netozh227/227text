@@ -7,7 +7,7 @@ export function Layout() {
   return (
     <div className="site">
       <header className="site-header">
-        <motionBar />
+        <MotionBar />
         <div className="header-inner">
           <Link to="/" className="brand">
             <span className="brand-mark" aria-hidden>
@@ -57,6 +57,6 @@ export function Layout() {
   );
 }
 
-function motionBar() {
+function MotionBar() {
   return <div className="header-strip" aria-hidden />;
 }

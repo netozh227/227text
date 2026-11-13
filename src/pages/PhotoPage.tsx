@@ -83,7 +83,7 @@ export function PhotoPage() {
       </nav>
 
       <article className="photo-detail card">
-        <motionFigure src={photo.imageUrl} title={photo.title} />
+        <MotionFigure src={photo.imageUrl} title={photo.title} />
         <div className="photo-detail-meta">
           <span className="tag">{photo.category}</span>
           <h1>{photo.title}</h1>
@@ -141,7 +141,7 @@ function ToolPair({ term, value }: { term: string; value: string }) {
   );
 }
 
-function motionFigure({ src, title }: { src: string; title: string }) {
+function MotionFigure({ src, title }: { src: string; title: string }) {
   return (
     <figure className="photo-detail-figure">
       <img src={src} alt={title} />

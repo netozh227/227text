@@ -11,7 +11,7 @@ export function PhotoCard({ photo, showPrivacy }: PhotoCardProps) {
   return (
     <article className="photo-card">
       <Link to={`/photos/${photo.id}`} className="photo-card-link">
-        <motionThumbnail src={photo.imageUrl} alt={photo.title} />
+        <MotionThumbnail src={photo.imageUrl} alt={photo.title} />
         <div className="photo-card-body">
           <span className="tag">{photo.category}</span>
           <h3>{photo.title}</h3>
@@ -25,7 +25,7 @@ export function PhotoCard({ photo, showPrivacy }: PhotoCardProps) {
   );
 }
 
-function motionThumbnail({ src, alt }: { src: string; alt: string }) {
+function MotionThumbnail({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="photo-thumb">
       <img src={src} alt={alt} loading="lazy" />

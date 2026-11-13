@@ -33,14 +33,14 @@ MVP 不依赖云数据库或对象存储，**数据区域 = 用户浏览器所�
 ## 本地运行
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
 构建与测试：
 
 ```bash
-npm run build
+npm ci && npm run build
 npm test
 ```
 
@@ -55,4 +55,4 @@ npm test
 
 ## Neto-Run
 
-`CR-0bc12c68f7de4bc8`
+`CR-74ca75232efd41eb`
