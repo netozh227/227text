@@ -27,7 +27,7 @@ export function Layout() {
           <div className="header-auth">
             {session ? (
               <>
-                <span className="user-pill">{session.displayName}</span>
+                <span className="user-pill">{session.username}</span>
                 <button type="button" className="btn ghost" onClick={logout}>
                   退出
                 </button>
