@@ -35,3 +35,8 @@ export function resolveSession(
   }
   return getSimulatedSession();
 }
+
+/** Session present for UI (includes default visitor simulation). */
+export function isUiAuthenticated(session: AuthSession | null): boolean {
+  return session !== null;
+}

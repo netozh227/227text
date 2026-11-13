@@ -2,7 +2,7 @@ import { Link, NavLink, Outlet } from 'react-router-dom';
 import { useApp } from '../context/AppProvider';
 
 export function Layout() {
-  const { session, logout } = useApp();
+  const { session, isLoggedIn, logout } = useApp();
 
   return (
     <div className="site">
@@ -25,9 +25,9 @@ export function Layout() {
             <NavLink to="/my">我的班级</NavLink>
           </nav>
           <div className="header-auth">
-            {session ? (
+            {isLoggedIn && session ? (
               <>
-                <span className="user-pill">{session.username}</span>
+                <span className="user-pill">{session.displayName}</span>
                 <button type="button" className="btn ghost" onClick={logout}>
                   退出
                 </button>

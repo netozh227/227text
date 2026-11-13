@@ -1,22 +1,25 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppProvider';
 
 export function LoginPage() {
-  const { login, session } = useApp();
+  const { login, isLoggedIn } = useApp();
   const navigate = useNavigate();
+  const location = useLocation();
+  const returnTo =
+    (location.state as { from?: string } | null)?.from ?? '/';
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (session) navigate('/', { replace: true });
-  }, [session, navigate]);
+    if (isLoggedIn) navigate(returnTo, { replace: true });
+  }, [isLoggedIn, navigate, returnTo]);
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const result = await login(username, password);
-    if (result.ok) navigate('/');
+    if (result.ok) navigate(returnTo, { replace: true });
     else setError(result.message);
   };
 

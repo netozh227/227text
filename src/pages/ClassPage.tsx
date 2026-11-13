@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useApp, useClass, useSchool } from '../context/AppProvider';
 import { PhotoCard } from '../components/PhotoCard';
 import { visiblePhotos } from '../lib/search';
@@ -9,7 +9,9 @@ export function ClassPage() {
   const cls = useClass(classId);
   const school = useSchool(cls?.schoolId ?? '');
   const navigate = useNavigate();
-  const { state, session, joinedClassIds, joinClass, leaveClass } = useApp();
+  const { state, session, isLoggedIn, joinedClassIds, joinClass, leaveClass } =
+    useApp();
+  const location = useLocation();
   const [message, setMessage] = useState('');
 
   if (!cls) {
@@ -64,7 +66,7 @@ export function ClassPage() {
         {cls.motto && <p className="motto">「{cls.motto}」</p>}
 
         <div className="action-row">
-          {session ? (
+          {isLoggedIn ? (
             isMember ? (
               <>
                 <button
@@ -85,7 +87,10 @@ export function ClassPage() {
             )
           ) : (
             <p className="hint">
-              <Link to="/login">登录</Link> 后可加入班级并上传照片
+              <Link to="/login" state={{ from: location.pathname }}>
+                登录
+              </Link>{' '}
+              后可加入班级并上传照片
             </p>
           )}
         </div>

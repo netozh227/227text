@@ -12,7 +12,7 @@ export function UploadPage() {
   const cls = useClass(classId);
   const school = useSchool(cls?.schoolId ?? '');
   const navigate = useNavigate();
-  const { session, joinedClassIds, addPhoto } = useApp();
+  const { session, isLoggedIn, joinedClassIds, addPhoto } = useApp();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -33,7 +33,7 @@ export function UploadPage() {
     );
   }
 
-  if (!session) {
+  if (!isLoggedIn || !session) {
     return (
       <div className="page empty-state">
         <h1>请先登录</h1>

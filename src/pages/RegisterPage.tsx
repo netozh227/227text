@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppProvider';
 
 export function RegisterPage() {
-  const { register, session } = useApp();
+  const { register, isLoggedIn } = useApp();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [displayName, setDisplayName] = useState('');
@@ -11,8 +11,8 @@ export function RegisterPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (session) navigate('/', { replace: true });
-  }, [session, navigate]);
+    if (isLoggedIn) navigate('/', { replace: true });
+  }, [isLoggedIn, navigate]);
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();

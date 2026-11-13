@@ -2,6 +2,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useLayoutEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -18,6 +19,7 @@ import { hashPassword, verifyPassword } from '../lib/crypto';
 import {
   ensureSimulatedUser,
   getSimulatedSession,
+  isUiAuthenticated,
   resolveSession,
 } from '../lib/simulatedAuth';
 import {
@@ -30,6 +32,7 @@ import {
 interface AppContextValue {
   state: AppState;
   session: AuthSession | null;
+  isLoggedIn: boolean;
   joinedClassIds: string[];
   register: (
     username: string,
@@ -68,7 +71,18 @@ function initApp(): { state: AppState; session: AuthSession } {
 export function AppProvider({ children }: { children: ReactNode }) {
   const [initial] = useState(initApp);
   const [state, setState] = useState<AppState>(() => initial.state);
-  const [session, setSession] = useState<AuthSession | null>(() => initial.session);
+  const [session, setSession] = useState<AuthSession | null>(
+    () => initial.session ?? getSimulatedSession(),
+  );
+
+  const isLoggedIn = isUiAuthenticated(session);
+
+  useLayoutEffect(() => {
+    if (session) return;
+    const resolved = resolveSession(null, state);
+    setSession(resolved);
+    saveSession(resolved);
+  }, [session, state]);
 
   const persistState = useCallback((next: AppState) => {
     setState(next);
@@ -224,6 +238,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const value: AppContextValue = {
     state,
     session,
+    isLoggedIn,
     joinedClassIds,
     register,
     login,

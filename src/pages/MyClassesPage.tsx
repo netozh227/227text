@@ -5,9 +5,9 @@ import { PhotoCard } from '../components/PhotoCard';
 import { visiblePhotos } from '../lib/search';
 
 export function MyClassesPage() {
-  const { state, session, joinedClassIds } = useApp();
+  const { state, session, isLoggedIn, joinedClassIds } = useApp();
 
-  if (!session) {
+  if (!isLoggedIn || !session) {
     return (
       <div className="page empty-state">
         <h1>我的班级</h1>
