@@ -62,7 +62,6 @@ export function HomePage() {
       <SearchPanel
         filters={filters}
         onChange={setFilters}
-        schools={state.schools}
         classes={state.classes}
       />
 

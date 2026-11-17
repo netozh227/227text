@@ -10,14 +10,7 @@ export function uniqueProvinces(schools: School[]): string[] {
   return [...new Set(schools.map((s) => s.region.province))].sort();
 }
 
-export function citiesForProvince(schools: School[], province: string): string[] {
-  if (!province) return [...new Set(schools.map((s) => s.region.city))].sort();
-  return [
-    ...new Set(
-      schools.filter((s) => s.region.province === province).map((s) => s.region.city),
-    ),
-  ].sort();
-}
+export { citiesForProvince } from '../data/chinaCities';
 
 export function filterSchools(schools: School[], filters: SearchFilters): School[] {
   const q = filters.query.trim().toLowerCase();
