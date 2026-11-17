@@ -59,11 +59,7 @@ export function HomePage() {
         </p>
       </section>
 
-      <SearchPanel
-        filters={filters}
-        onChange={setFilters}
-        classes={state.classes}
-      />
+      <SearchPanel filters={filters} onChange={setFilters} />
 
       <section className="results-section">
         <h2 className="section-title">学校</h2>

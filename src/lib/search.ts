@@ -79,8 +79,11 @@ export function visiblePhotos(
   });
 }
 
-export function graduationYears(classes: ClassArchive[]): number[] {
-  return [...new Set(classes.map((c) => c.graduationYear))].sort((a, b) => b - a);
+export function graduationYears(): number[] {
+  const end = new Date().getFullYear();
+  const years: number[] = [];
+  for (let y = end; y >= 1970; y--) years.push(y);
+  return years;
 }
 
 export function privacyLabel(scope: PrivacyScope): string {
